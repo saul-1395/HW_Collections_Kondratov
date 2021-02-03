@@ -10,40 +10,43 @@ public class InfoReader {
     private WordCounter wordCounter;
     private String path;
 
-    private void run(String path) {
+    public void appStart() {
+        inputPath();
         inputData = new InputData();
         wordCounter = new WordCounter(inputData.getStringList(path));
+        System.out.println("Количество слов в тексте");
         System.out.println(wordCounter.getResult());
+        System.out.println("Чаще всего встречается");
         System.out.println(wordCounter.getMaxLenght().toString());
+        System.out.println("По алфавиту");
+        System.out.println(wordCounter.alphabeticalOrder());
+
 
     }
 
-    public void inputPath() {
-        System.out.println("Введите полный путь или имя файлa в папке по адресу "
-                + System.getProperty("user.home") + "\\Documents\\Learn_IBS\\TestFiles\\" + ": ");
+    private void inputPath() {
+        System.out.println("Введите полный путь или имя файлa");
+        String resourcesPath = "src/main/resources/";
+
 
         Scanner in = new Scanner(System.in);
         String inputPath = in.nextLine();
+
         if (!inputPath.isEmpty()) {
-            String firstSymbol = inputPath.substring(0, 2);
-            if (firstSymbol.equals("C:")) {
-                if (new File(inputPath).exists()) {
-                    run(inputPath);
-                } else {
-                    System.out.println("Адрес не верен");
-                    this.inputPath();
-                }
-            } else if (!inputPath.isEmpty()) {
-                path = System.getProperty("user.home") + "\\Documents\\Learn_IBS\\TestFiles\\" + inputPath;
-                if (new File(path).exists()) {
-                    run(path);
-                } else {
-                    System.out.println("Имя файла не верно");
-                    this.inputPath();
-                }
+            if (!inputPath.contains("/")) {
+                inputPath = resourcesPath + inputPath;
+                
+            }
+            if (new File(inputPath).exists()) {
+                path = inputPath;
+
+            } else {
+                System.out.println("Имя файла не верно");
+                inputPath();
             }
         } else {
-            this.inputPath();
+            System.out.println("Введите имя файла или путь");
+            inputPath();
         }
     }
 }

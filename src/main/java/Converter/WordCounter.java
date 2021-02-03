@@ -107,5 +107,12 @@ public class WordCounter {
 
     }
 
+    public ArrayList<String> alphabeticalOrder(){
+        Collections.sort(resultString);
+
+        return resultString;
+
+    }
+
 
 }
